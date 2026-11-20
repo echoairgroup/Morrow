@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f0e8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Morrow">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="description" content="Morrow — a personal journal made of pages, memories and little details.">
+  <title>Morrow — your life, in pages</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#today" aria-label="Morrow home">
+        <span class="brand-mark"><span></span><span></span></span>
+        <span class="brand-name">morrow</span>
+      </a>
+      <div class="workspace-label">YOUR SPACE</div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="today"><span class="nav-icon">⌂</span><span>Today</span><kbd>1</kbd></button>
+        <button class="nav-link" data-view="journals"><span class="nav-icon">▤</span><span>My journals</span><small id="journal-count">2</small></button>
+        <button class="nav-link" data-view="calendar"><span class="nav-icon">▦</span><span>Calendar</span></button>
+        <button class="nav-link" data-view="goals"><span class="nav-icon">◎</span><span>Goals & habits</span></button>
+        <button class="nav-link" data-view="memories"><span class="nav-icon">✳</span><span>Memories</span></button>
+        <button class="nav-link" data-view="wrapped"><span class="nav-icon">✧</span><span>Your year</span></button>
+      </nav>
+      <div class="sidebar-rule"></div>
+      <div class="workspace-label">YOUR LIBRARY</div>
+      <div class="library-list" id="library-list"></div>
+      <button class="sidebar-add" id="sidebar-new-journal"><span>＋</span> New journal</button>
+      <div class="sidebar-bottom">
+        <button class="nav-link" data-view="community"><span class="nav-icon">♧</span><span>Discover</span><span class="soon-dot"></span></button>
+        <button class="nav-link" data-view="settings"><span class="nav-icon">⚙</span><span>Settings</span></button>
+        <div class="profile-mini">
+          <div class="avatar">Y</div>
+          <div class="profile-copy"><strong>Your space</strong><span>Personal journal</span></div>
+          <span class="more-dots">···</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="crumbs"><button class="mobile-menu" id="mobile-menu" aria-label="Open menu">☰</button><span class="crumb-muted">MORROW</span><span class="crumb-slash">/</span><span class="crumb-current" id="crumb-current">Today</span></div>
+        <div class="topbar-actions">
+          <span class="save-state"><i class="save-dot"></i><span id="save-state">All changes saved</span></span>
+          <button class="icon-button" id="search-open" aria-label="Search">⌕</button>
+          <button class="icon-button" id="help-open" aria-label="Help">?</button>
+          <button class="top-avatar" aria-label="Your profile">Y</button>
+        </div>
+      </header>
+
+      <section class="view active" id="view-today">
+        <div class="welcome-row">
+          <div>
+            <div class="eyebrow" id="today-date">FRIDAY, 20 NOVEMBER 2026</div>
+            <h1>A little space <em>for you.</em></h1>
+            <p class="lede">A place to keep the things you don't want to forget.</p>
+          </div>
+          <button class="button button-dark" id="write-today"><span>＋</span> Write today</button>
+        </div>
+        <div class="today-grid">
+          <article class="daily-card paper-card">
+            <div class="card-topline"><span class="eyebrow">YOUR DAILY PAGE</span><span class="tiny-date" id="daily-card-date">20 / 11 / 26</span></div>
+            <div class="daily-card-content">
+              <div class="daily-date-large" id="daily-large-day">20</div>
+              <div class="daily-copy"><span class="daily-month" id="daily-month">NOVEMBER 2026</span><h2>Make room for<br><em>what matters.</em></h2><p>Start with a few words. The rest can follow.</p><button class="text-link" id="open-daily">Open today's page <span>↗</span></button></div>
+            </div>
+            <div class="paper-edge"></div>
+          </article>
+          <article class="prompt-card">
+            <div class="prompt-meta"><span class="eyebrow">A THOUGHT TO KEEP</span><span class="prompt-spark">✳</span></div>
+            <p class="prompt-question" id="prompt-question">What is something small that made today feel like yours?</p>
+            <button class="text-link" id="prompt-write">Write about it <span>↗</span></button>
+            <span class="prompt-number">01 / 365</span>
+          </article>
+        </div>
+        <div class="section-heading"><div><span class="eyebrow">PICK UP WHERE YOU LEFT OFF</span><h2>Your journals</h2></div><button class="text-link" data-go="journals">View all <span>→</span></button></div>
+        <div class="journal-shelf" id="today-shelf"></div>
+        <div class="bottom-grid">
+          <section class="recent-section"><div class="section-heading compact"><div><span class="eyebrow">LITTLE MOMENTS</span><h2>Recently added</h2></div><button class="subtle-link" data-go="memories">See all</button></div><div class="recent-list" id="recent-list"></div></section>
+          <section class="checkin-card"><div class="section-heading compact"><div><span class="eyebrow">HOW ARE YOU, REALLY?</span><h2>A quick check-in</h2></div><span class="checkin-icon">☼</span></div><p class="muted-copy">No right answer. Just notice how you feel.</p><div class="mood-options" id="mood-options"><button data-mood="great" aria-label="Great">☀<span>Good</span></button><button data-mood="calm" aria-label="Calm">☁<span>Calm</span></button><button data-mood="okay" aria-label="Okay">◒<span>Okay</span></button><button data-mood="low" aria-label="Low">☂<span>Low</span></button><button data-mood="tired" aria-label="Tired">☾<span>Tired</span></button></div><div class="checkin-note" id="checkin-note">A moment for yourself, whenever you're ready.</div></section>
+        </div>
+      </section>
+
+      <section class="view" id="view-journals">
+        <div class="page-heading"><div><span class="eyebrow">YOUR PERSONAL LIBRARY</span><h1>My <em>journals.</em></h1><p class="lede">Different chapters, different corners of you.</p></div><button class="button button-dark" id="new-journal">＋ Create a journal</button></div>
+        <div class="filter-row"><div class="filter-tabs"><button class="filter-tab active" data-filter="all">All journals</button><button class="filter-tab" data-filter="active">In progress</button><button class="filter-tab" data-filter="archived">Archived</button></div><span class="muted-small" id="journal-total">2 journals</span></div>
+        <div class="journals-grid" id="journals-grid"></div>
+      </section>
+
+      <section class="view editor-view" id="view-editor">
+        <div class="editor-header">
+          <div><button class="back-link" id="back-to-journals">← All journals</button><h1 id="editor-journal-title">My everyday</h1><p class="editor-subline"><span id="editor-page-date">Friday, November 20</span><span class="subline-dot">·</span><span id="editor-page-number">Page 01</span><span class="subline-dot">·</span><span class="autosave-inline">Saved locally</span></p></div>
+          <div class="editor-head-actions"><button class="button button-outline button-small" id="template-open">Use a template</button><button class="button button-dark button-small" id="print-journal">Print / export ↗</button></div>
+        </div>
+        <div class="editor-workspace">
+          <aside class="tool-rail" aria-label="Page tools">
+            <button class="tool-button selected" data-tool="select" title="Select and move">↖<span>Select</span></button>
+            <button class="tool-button" data-tool="text" title="Add text">T<span>Text</span></button>
+            <button class="tool-button" data-tool="photo" title="Add photo">▧<span>Photo</span></button>
+            <button class="tool-button" data-tool="sticker" title="Add sticker">✳<span>Sticker</span></button>
+            <button class="tool-button" data-tool="draw" title="Draw with pen">✎<span>Draw</span></button>
+            <button class="tool-button" data-tool="checklist" title="Add checklist">☷<span>List</span></button>
+            <button class="tool-button" data-tool="table" title="Add table">▦<span>Table</span></button>
+            <button class="tool-button" data-tool="quote" title="Add quote">“<span>Quote</span></button>
+            <div class="tool-divider"></div>
+            <button class="tool-button" id="editor-undo" title="Undo">↶<span>Undo</span></button>
+            <button class="tool-button" id="editor-redo" title="Redo">↷<span>Redo</span></button>
+          </aside>
+          <div class="book-stage">
+            <div class="book-toolbar">
+              <div class="book-toolbar-left"><span class="eyebrow">YOUR OPEN BOOK</span><span class="book-status" id="book-status">A5 · Portrait</span></div>
+              <div class="book-toolbar-right"><button class="mini-tool" id="paper-settings" title="Paper settings">☷ <span>Paper</span></button><button class="mini-tool" id="zoom-out" title="Zoom out">−</button><span class="zoom-value" id="zoom-value">100%</span><button class="mini-tool" id="zoom-in" title="Zoom in">＋</button><button class="mini-tool" id="focus-mode" title="Focus mode">⛶</button></div>
+            </div>
+            <div class="book-wrap" id="book-wrap">
+              <div class="book-spread" id="book-spread">
+                <article class="book-page left-page" id="left-page" data-page-index="0"><div class="page-number">—</div><div class="page-content" id="left-content"></div><canvas class="draw-layer" id="left-canvas"></canvas></article>
+                <div class="book-gutter"></div>
+                <article class="book-page right-page" id="right-page" data-page-index="1"><div class="page-number">01</div><div class="page-content" id="right-content"></div><canvas class="draw-layer" id="right-canvas"></canvas></article>
+              </div>
+              <div class="page-turn-controls"><button id="prev-page" title="Previous pages">←</button><span id="spread-indicator">1–2 of 2</span><button id="next-page" title="Next pages">→</button></div>
+            </div>
+            <div class="editor-footer"><span><i class="pen-indicator"></i> Stylus & touch supported</span><span>Changes are saved on this device</span></div>
+          </div>
+          <aside class="inspector" id="inspector">
+            <div class="inspector-heading"><span class="eyebrow">PAGE DETAILS</span><button class="inspector-close" id="inspector-close">×</button></div>
+            <div class="inspector-section"><label for="page-title-input">Page title</label><input id="page-title-input" type="text" placeholder="Give this page a name"></div>
+            <div class="inspector-section"><label>Page style</label><div class="paper-swatches" id="paper-swatches"><button class="paper-swatch swatch-cream active" data-paper="cream" title="Warm cream"></button><button class="paper-swatch swatch-white" data-paper="white" title="White"></button><button class="paper-swatch swatch-grid" data-paper="grid" title="Grid"></button><button class="paper-swatch swatch-lines" data-paper="lines" title="Lined"></button><button class="paper-swatch swatch-dot" data-paper="dot" title="Dotted"></button></div></div>
+            <div class="inspector-section"><label>Page size</label><select id="page-size"><option value="a5">A5 · Portrait</option><option value="a4">A4 · Portrait</option><option value="square">Square · 20 × 20 cm</option></select></div>
+            <div class="inspector-section"><label>Page tools</label><div class="inspector-actions"><button id="duplicate-page">▣ Duplicate page</button><button id="delete-page">⌫ Delete page</button><button id="add-page">＋ Add a new page</button></div></div>
+            <div class="inspector-section selected-element-section" id="selected-element-section"><label>Selected element</label><p class="muted-small">Select something on the page to edit its details.</p></div>
+            <div class="inspector-hint"><span>✦</span><p>Make it yours. Nothing has to be perfect to be worth keeping.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="view-calendar">
+        <div class="page-heading"><div><span class="eyebrow">LIFE, OVER TIME</span><h1>Your <em>calendar.</em></h1><p class="lede">A gentle map of the moments you've kept.</p></div><div class="calendar-actions"><button class="button button-outline" id="calendar-today">Today</button></div></div>
+        <div class="calendar-layout"><section class="calendar-panel"><div class="calendar-head"><button id="month-prev">←</button><h2 id="calendar-month-label">November 2026</h2><button id="month-next">→</button></div><div class="calendar-grid" id="calendar-grid"></div></section><aside class="calendar-side"><span class="eyebrow">SELECTED DAY</span><h2 id="selected-day-label">20 November</h2><div id="selected-day-items" class="selected-day-items"></div><button class="button button-dark button-full" id="calendar-new-entry">＋ Write for this day</button></aside></div>
+      </section>
+
+      <section class="view" id="view-goals">
+        <div class="page-heading"><div><span class="eyebrow">SMALL STEPS COUNT</span><h1>Goals & <em>habits.</em></h1><p class="lede">A little progress, made visible.</p></div><button class="button button-dark" id="new-goal">＋ Add a goal</button></div>
+        <div class="goal-summary" id="goal-summary"></div>
+        <div class="goal-layout"><section><div class="section-heading compact"><div><span class="eyebrow">YOUR HABITS</span><h2>Daily rituals</h2></div><button class="subtle-link" id="add-habit">＋ Add habit</button></div><div class="habit-list" id="habit-list"></div></section><section><div class="section-heading compact"><div><span class="eyebrow">LOOKING AHEAD</span><h2>Your goals</h2></div></div><div class="goals-list" id="goals-list"></div></section></div>
+      </section>
+
+      <section class="view" id="view-memories">
+        <div class="page-heading"><div><span class="eyebrow">THE THINGS THAT STAY</span><h1>Little <em>memories.</em></h1><p class="lede">A collection of moments, words and places.</p></div><button class="button button-dark" id="memory-new">＋ Save a memory</button></div>
+        <div class="memory-controls"><div class="search-field"><span>⌕</span><input id="memory-search" placeholder="Search your memories…"></div><select id="memory-filter"><option value="all">All memories</option><option value="photo">With photos</option><option value="written">Written pages</option></select></div>
+        <div class="memories-grid" id="memories-grid"></div>
+      </section>
+
+      <section class="view" id="view-wrapped">
+        <div class="wrapped-page"><div class="wrapped-kicker">A YEAR, IN YOUR WORDS</div><h1>Your <span id="wrapped-year">2026</span>,<br><em>collected.</em></h1><p class="wrapped-intro">A look back at the pages, pauses and little milestones that made this year yours.</p><div class="wrapped-stats" id="wrapped-stats"></div><div class="wrapped-quote" id="wrapped-quote">“The little things? The little moments? They aren't little.”<span>— Jon Kabat-Zinn</span></div><button class="button button-light" id="generate-wrapped">Create my year in review ↗</button><p class="wrapped-footnote">Your year in review is made from what you've chosen to save in Morrow.</p></div>
+      </section>
+
+      <section class="view" id="view-community">
+        <div class="page-heading"><div><span class="eyebrow">A PLACE TO BE INSPIRED</span><h1>Discover <em>together.</em></h1><p class="lede">A quieter corner of the internet, made for meaningful pages.</p></div></div>
+        <div class="community-note"><div class="community-stamp">M</div><span class="eyebrow">COMING WHEN IT'S READY</span><h2>Share a page.<br><em>Keep the rest yours.</em></h2><p>We're shaping a thoughtful community where you can share selected pages, follow journal-makers and find inspiration — without ever giving up ownership of your private journal.</p><div class="privacy-promise"><span>✓</span> Your journal stays private unless you choose to share something.</div></div>
+        <div class="community-previews"><article><span class="eyebrow">MADE FOR YOU</span><h3>Public pages, private books.</h3><p>Choose exactly what you share, one page at a time.</p></article><article><span class="eyebrow">A SMALLER FEED</span><h3>Inspiration, not noise.</h3><p>Discover thoughtful spreads, prompts and creative ideas.</p></article><article><span class="eyebrow">YOUR OWN PACE</span><h3>Follow people you like.</h3><p>Build a corner of the community that feels like yours.</p></article></div>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="page-heading"><div><span class="eyebrow">MAKE MORROW YOURS</span><h1>Your <em>settings.</em></h1><p class="lede">Your space, your preferences, your data.</p></div></div>
+        <div class="settings-layout"><nav class="settings-nav"><button class="active" data-settings-tab="appearance">Appearance</button><button data-settings-tab="privacy">Privacy & data</button><button data-settings-tab="reminders">Reminders</button><button data-settings-tab="about">About Morrow</button></nav><div class="settings-content" id="settings-content"></div></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop" id="modal-backdrop" hidden><div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-top"><span class="eyebrow" id="modal-eyebrow">A LITTLE SOMETHING</span><button class="modal-close" id="modal-close" aria-label="Close dialog">×</button></div><h2 id="modal-title">Create something</h2><div id="modal-body"></div><div class="modal-actions" id="modal-actions"></div></div></div>
+  <input type="file" id="file-picker" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" multiple hidden>
+  <input type="file" id="import-picker" accept="application/json,.json" hidden>
+  <script src="app.js"></script>
+</body>
+</html>
